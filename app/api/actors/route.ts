@@ -9,7 +9,7 @@ export async function POST(
         const { userId } = auth();
         const body = await req.json();
 
-        const { Name , imageUrl } = body;
+        const { Name , imageUrl , character } = body;
 
         if(!userId){
             return new NextResponse("Unauthorized", { status: 401 });
@@ -19,6 +19,11 @@ export async function POST(
             return new NextResponse("Name is required", { status: 400 });
         }
 
+        if(!character){
+            return new NextResponse("Character name is required", { status: 400 });
+        }
+        
+
         if(!imageUrl){
             return new NextResponse("Image URL is required", { status: 400 });
         }
@@ -27,6 +32,7 @@ export async function POST(
             data:{
                 Name,
                 imageUrl,
+                character,
             }
         });
 

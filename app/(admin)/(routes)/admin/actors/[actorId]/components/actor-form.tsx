@@ -27,6 +27,7 @@ import ImageUpload from "@/components/ui/image-upload"
 
 const formSchema = z.object({
   Name: z.string().min(1),
+  character: z.string().min(1),
   imageUrl: z.string().min(1),
 });
 
@@ -54,7 +55,8 @@ export const ActorForm: React.FC<ActorFormProps> = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       Name: '',
-      imageUrl: ''
+      imageUrl: '',
+      character: '',
     }
   });
 
@@ -142,6 +144,19 @@ export const ActorForm: React.FC<ActorFormProps> = ({
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="Actor name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="character"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Character</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="Character name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

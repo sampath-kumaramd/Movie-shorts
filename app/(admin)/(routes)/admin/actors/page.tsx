@@ -13,6 +13,7 @@ const ActorsPage = async () => {
   const formattedActor: ActorColumn[] = actors.map((item) => ({
     id : item.id,
     name : item.Name,
+    character: item.character,
     createdAt : format(item.createdAt,"MMMM do,yyyy"),
   }))
 

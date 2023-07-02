@@ -34,6 +34,7 @@ model Category{
 model Actor{
   id        String      @id @default(uuid())
   Name     String
+  character     String
   imageUrl     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

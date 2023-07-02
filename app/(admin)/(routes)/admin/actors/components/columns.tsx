@@ -7,6 +7,7 @@ import { CellAction } from "./cell-action"
 export type ActorColumn = {
   id: string
   name: string
+  character: string
   createdAt:string
 }
 
@@ -16,8 +17,12 @@ export const columns: ColumnDef<ActorColumn>[] = [
     header: "Name",
   },
   {
+    accessorKey: "character",
+    header: "Character",
+  },
+  {
     accessorKey: "createdAt",
-    header: "Date",
+    header: "Added Date",
   },
   {
     id:"actions",
