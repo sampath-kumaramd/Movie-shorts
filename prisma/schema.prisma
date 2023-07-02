@@ -11,9 +11,11 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Test {
-  id        Int      @id @default(autoincrement())
-  test      String
+model Banner{
+  id        String      @id @default(uuid())
+  label     String
+  imageUrl     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
 }

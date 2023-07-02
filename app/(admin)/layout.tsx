@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
@@ -15,5 +16,10 @@ export default async function AdminLayout({
   if (userId !== "user_2Rxkffrisy9rx7TwRxwWZy5zEsn") {
     redirect("/user");
   }
-  return <>{children}</>;
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 }
