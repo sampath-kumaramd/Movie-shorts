@@ -26,7 +26,13 @@ export function MainNav({
             href: "/admin/actors",
             label: "Actors",
             active: pathname === "/admin/actors",
+        },
+        {
+            href: "/admin/movies",
+            label: "Movies",
+            active: pathname === "/admin/movies",
         }
+        
     ];
 
     return (

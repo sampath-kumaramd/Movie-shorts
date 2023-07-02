@@ -36,6 +36,35 @@ model Actor{
   Name     String
   character     String
   imageUrl     String
+  movies ActorsOnMovies[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Movie{
+  id        String      @id @default(uuid())
+  title     String
+  description     String
+  imageUrl     String
+  bannerImageUrl     String
+  releaseDate     DateTime
+  director     String
+  genres String
+  isFeatured  Boolean   @default(false)
+  isArchived  Boolean   @default(false)
+  actors ActorsOnMovies[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActorsOnMovies{
+  id        String      @id @default(uuid())
+  ActorId String
+  MovieId String
+  Actor Actor @relation(fields: [ActorId], references: [id])
+  Movie Movie @relation(fields: [MovieId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([ActorId])
+  @@index([MovieId])
 }
