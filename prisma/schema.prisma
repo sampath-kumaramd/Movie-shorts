@@ -6,65 +6,71 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider     = "sqlite"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-model Billboard{
-  id        String      @id @default(uuid())
-  label     String
-  imageUrl     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Billboard {
+  id         String     @id @default(uuid())
+  label      String
+  imageUrl   String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   categories Category[]
 }
 
-model Category{
-  id        String      @id @default(uuid())
-  name     String
+model Category {
+  id          String    @id @default(uuid())
+  name        String
   BillboardId String
-  Billboard Billboard @relation(fields: [BillboardId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Billboard   Billboard @relation(fields: [BillboardId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Movie       Movie[]
+
   @@index([BillboardId])
 }
 
-
-model Actor{
-  id        String      @id @default(uuid())
-  Name     String
-  character     String
-  imageUrl     String
-  movies ActorsOnMovies[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Actor {
+  id        String           @id @default(uuid())
+  Name      String
+  character String
+  imageUrl  String
+  movies    ActorsOnMovies[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 }
 
-model Movie{
-  id        String      @id @default(uuid())
-  title     String
-  description     String
-  imageUrl     String
-  bannerImageUrl     String
-  releaseDate     DateTime
-  director     String
-  genres String
-  isFeatured  Boolean   @default(false)
-  isArchived  Boolean   @default(false)
-  actors ActorsOnMovies[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Movie {
+  id             String           @id @default(uuid())
+  title          String
+  description    String
+  imageUrl       String
+  bannerImageUrl String
+  releaseDate    DateTime
+  director       String
+  genres         String
+  categoryId     String 
+  category       Category         @relation( fields: [categoryId], references: [id])
+  isFeatured     Boolean          @default(false)
+  isArchived     Boolean          @default(false)
+  actors         ActorsOnMovies[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  
+  @@index([categoryId])
 }
 
-model ActorsOnMovies{
-  id        String      @id @default(uuid())
-  ActorId String
-  MovieId String
-  Actor Actor @relation(fields: [ActorId], references: [id])
-  Movie Movie @relation(fields: [MovieId], references: [id])
+model ActorsOnMovies {
+  id        String   @id @default(uuid())
+  ActorId   String
+  MovieId   String
+  Actor     Actor    @relation(fields: [ActorId], references: [id])
+  Movie     Movie    @relation(fields: [MovieId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@index([ActorId])
   @@index([MovieId])
 }

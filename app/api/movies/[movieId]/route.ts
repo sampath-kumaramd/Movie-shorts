@@ -8,6 +8,7 @@ export async function GET(
     { params } : { params: { movieId: string } }
 ) {
     try{
+    
         if(!params.movieId){
             return new NextResponse("Movie Id is required", { status: 400 });
         }
@@ -16,11 +17,14 @@ export async function GET(
             where:{
                 id: params.movieId,
             },
+            include:{
+                category: true,
+            }
         });
 
         return NextResponse.json(movie);
     } catch (err) {
-        console.error('[MOVIES_GET]', err);
+        console.error('[MOVIE_GET]', err);
         return new NextResponse("Internal error", { status: 500 });
     }
 };
@@ -33,7 +37,7 @@ export async function PATCH(
         const { userId } = auth();
         const body = await req.json();
 
-        const { title , imageUrl ,bannerImageUrl ,  description , releaseDate , director , genres ,isFeatured , isArchived} = body;
+        const { title , imageUrl ,bannerImageUrl ,  description , releaseDate , director , genres ,isFeatured , isArchived , categoryId} = body;
 
         if(!userId){
             return new NextResponse("Unauthorized", { status: 401 });
@@ -66,6 +70,11 @@ export async function PATCH(
             return new NextResponse("Genres is required", { status: 400 });
         }
 
+        if(!categoryId){
+            return new NextResponse("Category Id is required", { status: 400 });
+        }
+
+
         const movie = await prismadb.movie.updateMany({
             where:{
                 id: params.movieId,
@@ -78,6 +87,7 @@ export async function PATCH(
                 releaseDate,
                 director,
                 genres,
+                categoryId,
                 isFeatured,
                 isArchived
             }

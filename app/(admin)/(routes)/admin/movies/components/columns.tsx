@@ -12,6 +12,7 @@ export type MovieColumn = {
   director: string
   genres: string
   createdAt:string
+  
 }
 
 export const columns: ColumnDef<MovieColumn>[] = [
@@ -22,6 +23,10 @@ export const columns: ColumnDef<MovieColumn>[] = [
   {
     accessorKey: "description",
     header: "Description",
+    cell: ({ row }) => {
+      const description = row.original.description;
+      return description.substring(0, 30) + "...";
+    },
   },
   {
     accessorKey: "director",
@@ -30,6 +35,10 @@ export const columns: ColumnDef<MovieColumn>[] = [
   {
     accessorKey: "genres",
     header: "Genres",
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
   },
   {
     accessorKey: "releaseAt",

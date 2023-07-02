@@ -14,6 +14,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { useToast } from "@/components/ui/use-toast";
 
 interface CellActionProps {
   data: MovieColumn;
@@ -22,13 +23,17 @@ interface CellActionProps {
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
+  const { toast } = useToast()
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("API Route copied to the clipboard.");
+    toast({
+      title: "Copied",
+      description:"API Route copied to the clipboard."
+    });
   };
 
   const onDelete = async () => {
@@ -37,11 +42,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       await axios.delete(`/api/movies/${data.id}`);
       router.refresh();
       router.push(`/admin/movies`);
-      toast.success("Movie deleted.");
+      toast({
+        title: "Deleted",
+        description:"Movie is deleted."
+      });
     } catch (error: any) {
-      toast.error(
-        "Something wrong happened."
-      );
+      toast({
+        title: "Error",
+        description:"Something wrong happened."
+      });
     } finally {
       setLoading(false);
       setOpen(false);

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Trash } from "lucide-react";
-import { Movie } from "@prisma/client";
+import { Category, Movie } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
@@ -46,6 +46,7 @@ const formSchema = z.object({
   releaseDate: z.date(),
   director: z.string().min(1),
   genres: z.string().min(1),
+  categoryId: z.string().min(1),
   isFeatured: z.boolean(),
   isArchived: z.boolean(),
 });
@@ -54,9 +55,13 @@ type MovieFormValues = z.infer<typeof formSchema>;
 
 interface MovieFormProps {
   initialData: Movie | null;
+  categories: Category[];
 }
 
-export const MovieForm: React.FC<MovieFormProps> = ({ initialData }) => {
+export const MovieForm: React.FC<MovieFormProps> = ({
+   initialData ,
+   categories,
+  }) => {
   const params = useParams();
   const router = useRouter();
 
@@ -78,6 +83,7 @@ export const MovieForm: React.FC<MovieFormProps> = ({ initialData }) => {
       releaseDate: new Date(),
       director: "",
       genres: "",
+      categoryId: "",
       isFeatured: false,
       isArchived: false,
     },
@@ -109,9 +115,7 @@ export const MovieForm: React.FC<MovieFormProps> = ({ initialData }) => {
       router.push(`/movies`);
       toast.success("Movie deleted.");
     } catch (error: any) {
-      toast.error(
-        "Something Went Wrong."
-      );
+      toast.error("Something Went Wrong.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -220,6 +224,21 @@ export const MovieForm: React.FC<MovieFormProps> = ({ initialData }) => {
             />
             <FormField
               control={form.control}
+              name="releaseDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Release Date</FormLabel>
+                  <FormControl>
+                    <div>
+                      <DatePickerDemo />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="genres"
               render={({ field }) => (
                 <FormItem>
@@ -247,6 +266,28 @@ export const MovieForm: React.FC<MovieFormProps> = ({ initialData }) => {
                         <SelectItem value="Horror">Horror</SelectItem>
                         <SelectItem value="Romance">Romance</SelectItem>
                       </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue defaultValue={field.value} placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -309,19 +350,6 @@ export const MovieForm: React.FC<MovieFormProps> = ({ initialData }) => {
                       This Film will not appear any where on the web page.
                     </FormDescription>
                   </div>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="releaseDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Release Date</FormLabel>
-                  <FormControl>
-                    <DatePickerDemo/>
-                  </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

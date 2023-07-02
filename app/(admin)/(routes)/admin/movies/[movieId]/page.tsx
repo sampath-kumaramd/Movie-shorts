@@ -12,10 +12,17 @@ const MoviePage = async ({
             id: params.movieId
         }
     });
+
+    const categories = await prismadb.category.findMany({
+     
+    });
+  
+  
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <MovieForm 
+        categories={categories}
         initialData={Movie}
         />
       </div>

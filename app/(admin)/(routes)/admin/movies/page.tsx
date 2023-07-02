@@ -7,7 +7,10 @@ const MoviesPage = async () => {
   const movies = await prismadb.movie.findMany({
     orderBy:{
       createdAt: 'desc'
-    }
+    },
+    include: {
+      category: true,
+    },
   });
 
   const formattedMovie: MovieColumn[] = movies.map((item) => ({
@@ -17,6 +20,7 @@ const MoviesPage = async () => {
     releaseAt : format(item.releaseDate,"MMMM do,yyyy"),
     director: item.director,
     genres: item.genres,
+    category: item.category.name,
     createdAt : format(item.createdAt,"MMMM do,yyyy"),
   }))
 

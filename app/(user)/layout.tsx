@@ -1,3 +1,5 @@
+import NavBar from "@/components/userComponents/navbar";
+import Footer from "@/components/userComponents/user-footer";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
@@ -15,5 +17,11 @@ export default async function UserLayout({
   if (userId === "user_2Rxkffrisy9rx7TwRxwWZy5zEsn") {
     redirect("/admin");
   }
-  return <>{children}</>;
+  return (
+    <>
+      <NavBar />
+      {children}
+      <Footer />
+    </>
+  );
 }
