@@ -16,6 +16,11 @@ export function MainNav({
             href: "/admin/billboards",
             label: "Billboards",
             active: pathname === "/admin/billboards",
+        },
+        {
+            href: "/admin/categories",
+            label: "Categories",
+            active: pathname === "/admin/categories",
         }
     ];
 

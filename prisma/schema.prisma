@@ -11,11 +11,23 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Banner{
+model Billboard{
   id        String      @id @default(uuid())
   label     String
   imageUrl     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  categories Category[]
+}
+
+model Category{
+  id        String      @id @default(uuid())
+  name     String
+  BillboardId String
+  Billboard Billboard @relation(fields: [BillboardId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([BillboardId])
 
 }

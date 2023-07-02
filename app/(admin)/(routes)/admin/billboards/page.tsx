@@ -4,7 +4,7 @@ import { BillboardColumn } from "./components/columns";
 import { format } from "date-fns";
 const BillboardsPage = async () => {
 
-  const billboards = await prismadb.banner.findMany({
+  const billboards = await prismadb.billboard.findMany({
     orderBy:{
       createdAt: 'desc'
     }

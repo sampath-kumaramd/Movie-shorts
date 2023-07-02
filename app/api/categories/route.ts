@@ -9,30 +9,30 @@ export async function POST(
         const { userId } = auth();
         const body = await req.json();
 
-        const { label , imageUrl } = body;
+        const { name , BillboardId } = body;
 
         if(!userId){
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        if(!label){
-            return new NextResponse("Label is required", { status: 400 });
+        if(!name){
+            return new NextResponse("Name is required", { status: 400 });
         }
 
-        if(!imageUrl){
-            return new NextResponse("Image URL is required", { status: 400 });
+        if(!BillboardId){
+            return new NextResponse("Billboard id is required", { status: 400 });
         }
 
-        const billboard = await prismadb.billboard.create({
+        const category = await prismadb.category.create({
             data:{
-                label,
-                imageUrl,
+                name,
+                BillboardId,
             }
         });
 
-        return NextResponse.json(billboard);
+        return NextResponse.json(category);
     } catch(error) {
-        console.error('[BILLBOARDS_POST]', error);
+        console.error('[CATEGORY_POST]', error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }
@@ -48,13 +48,13 @@ export async function GET(
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const billboard = await prismadb.billboard.findMany({
+        const category = await prismadb.category.findMany({
            
         });
 
-        return NextResponse.json(billboard);
+        return NextResponse.json(category);
     } catch(error) {
-        console.error('[BILLBOARDS_GET]', error);
+        console.error('[CATEGORY_GET]', error);
         return new NextResponse("Internal error", { status: 500 });
     }
 }
