@@ -27,7 +27,14 @@ model Category{
   Billboard Billboard @relation(fields: [BillboardId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   @@index([BillboardId])
+}
 
+
+model Actor{
+  id        String      @id @default(uuid())
+  Name     String
+  imageUrl     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

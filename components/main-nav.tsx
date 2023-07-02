@@ -21,6 +21,11 @@ export function MainNav({
             href: "/admin/categories",
             label: "Categories",
             active: pathname === "/admin/categories",
+        },
+        {
+            href: "/admin/actors",
+            label: "Actors",
+            active: pathname === "/admin/actors",
         }
     ];
 
