@@ -18,7 +18,8 @@ const NavBar = async () => {
           <Link href="/user" className="ml-4 flex lg:ml-0 gap-x-2">
             <p className="font-bold text-xl"> Movie Shorts</p>
           </Link>
-
+        
+        {/* @ts-ignore */}
         <MainNavUser data={categories}/>
           <div className="ml-auto flex items-center space-x-4"><UserButton afterSignOutUrl="http://localhost:3000/"/></div>
         </div>
