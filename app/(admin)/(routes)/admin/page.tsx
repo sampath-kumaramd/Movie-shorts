@@ -19,8 +19,8 @@ export default function Admin() {
           {" "}
           Here, you have full control over the categories available to our
           users. The category table is your go-to resource to check if a
-          specific category already exists. If it's not listed, you can
-          effortlessly add it to expand our collection. Once you've ensured the
+          specific category already exists. If its not listed, you can
+          effortlessly add it to expand our collection. Once youve ensured the
           category availability, proceed to add movies to our database. With
           your expertise, our users will have access to a diverse range of
           movies, TV series, and TV shows.
