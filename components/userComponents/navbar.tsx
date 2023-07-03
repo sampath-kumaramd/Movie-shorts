@@ -21,7 +21,7 @@ const NavBar = async () => {
         
         {/* @ts-ignore */}
         <MainNavUser data={categories}/>
-          <div className="ml-auto flex items-center space-x-4"><UserButton afterSignOutUrl="http://localhost:3000/"/></div>
+          <div className="ml-auto flex items-center space-x-4"><UserButton afterSignOutUrl="/"/></div>
         </div>
         
       </Container>
