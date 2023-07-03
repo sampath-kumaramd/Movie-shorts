@@ -8,6 +8,8 @@ import prismadb from "@/lib/prismadb";
 const NavBar = async () => {
     const categories = await prismadb.category.findMany({
     });
+
+    
     
   return (
     <div className=" border-b ">

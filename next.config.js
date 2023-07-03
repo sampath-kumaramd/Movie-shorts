@@ -11,3 +11,5 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// via.placeholder.com
